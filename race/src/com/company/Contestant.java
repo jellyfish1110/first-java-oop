@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Comparator;
 
-public class Contestant implements Comparable
+public class Contestant
 {
 
     public Contestant()
@@ -46,12 +46,9 @@ public class Contestant implements Comparable
 
     public static Comparator<Contestant> comparator = new Comparator<com.company.Contestant>()
     {
-        public double compareTo(Contestant o1, Contestant o2)
+        public double compare(Contestant o1, Contestant o2)
         {
-            double Distance = o1.calcDistance(iterationCounter);
-            double Distance = o1.calcDistance(iterationCounter);
-
-            return o1-o2;
-        }};
-
+            return o1.Distance - o2.Distance;
+        }
+    };
 }

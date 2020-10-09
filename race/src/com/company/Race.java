@@ -49,15 +49,13 @@ public class Race
         {
             for (Contestant currentContestant : Contestants)
             {
-                currentContestant.calcDistance(iterationCounter);
-                currentContestant.calcDistance(iterationCounter);
-                currentContestant.calcDistance(iterationCounter);
-
-                iterationCounter--;
-                resetContestants();
-
-                Collections.sort(Contestants, currentContestant.comparator);
+                currentContestant.calcDistance(1);
+                currentContestant.calcDistance(1);
+                currentContestant.calcDistance(1);
             }
+            iterationCounter--;
+            resetContestants();
+            Collections.sort(Contestants, Contestant.comparator);
         }
     }
 }
