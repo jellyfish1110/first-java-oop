@@ -8,11 +8,15 @@ public class Main {
     {
         Scanner scan = new Scanner(System.in);
 
-        int iterationCounter = scan.nextInt();
+        System.out.println("Would you choose a time legnth for this race, please?");
 
-        Contestant john = new Contestant();
-        Contestant nick = new Contestant();
-        Contestant dimo = new Contestant();
+        int iterationsChosenByUser = scan.nextInt();
+        int iterationCounter = iterationsChosenByUser;
+        int contestantIterations = iterationsChosenByUser / iterationsChosenByUser;
+
+        Contestant john = new Contestant("John", 50);
+        Contestant nick = new Contestant("Nick", 45);
+        Contestant dimo = new Contestant("Dimo", 60);
 
         Race nishava = new Race();
 
@@ -20,6 +24,6 @@ public class Main {
         nishava.addContestants(nick);
         nishava.addContestants(dimo);
 
-        nishava.simulateRace(iterationCounter);
+        nishava.simulateRace(iterationCounter, contestantIterations);
     }
 }

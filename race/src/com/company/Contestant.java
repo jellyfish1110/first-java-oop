@@ -13,7 +13,7 @@ public class Contestant
     }
 
 
-    public Contestant(String Contestant, double Speed)
+    public Contestant(String Contestant, int Speed)
     {
         this.Contestant = Contestant;
         this.Speed = Speed;
@@ -21,20 +21,20 @@ public class Contestant
     }
 
     private String Contestant = new String();
-    private double Speed;
-    private double Distance;
+    private int Speed;
+    private int Distance;
 
     public String getName()
     {
         return Contestant;
     }
 
-    public double getSpeed()
+    public int getSpeed()
     {
         return Speed;
     }
 
-    public double getDistance()
+    public int getDistance()
     {
         return Distance;
     }
@@ -46,9 +46,10 @@ public class Contestant
 
     public static Comparator<Contestant> comparator = new Comparator<com.company.Contestant>()
     {
-        public double compare(Contestant o1, Contestant o2)
+        @Override
+        public int compare(Contestant o1, Contestant o2)
         {
-            return o1.Distance - o2.Distance;
+            return o2.Distance - o1.Distance;
         }
     };
 }

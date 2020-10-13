@@ -39,23 +39,49 @@ public class Race
     {
         for (Contestant current_Contestant : Contestants)
         {
-            current_Contestant.calcDistance(0);
+            current_Contestant.getDistance();
         }
     }
 
-    public void simulateRace(int iterationCounter)
+
+    public void simulateRace(int iterationCounter, int contestant_Iterations)
     {
+        System.out.println("         Ready, ");
+        System.out.println("      Set...GO!!! \n");
+        System.out.println(getContestantStanding());
         while(iterationCounter >= 1)
         {
             for (Contestant currentContestant : Contestants)
             {
-                currentContestant.calcDistance(1);
-                currentContestant.calcDistance(1);
-                currentContestant.calcDistance(1);
+                currentContestant.calcDistance(contestant_Iterations);
+                currentContestant.calcDistance(contestant_Iterations);
+                currentContestant.calcDistance(contestant_Iterations);
+
             }
             iterationCounter--;
+            contestant_Iterations++;
             resetContestants();
             Collections.sort(Contestants, Contestant.comparator);
+            System.out.println(getContestantStanding());
         }
+        System.out.println("      Race is over!");
+        System.out.println("        results:");
+        System.out.println(getContestantStanding());
+    }
+
+
+    public String getContestantStanding()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (Contestant sorted_Contestant : Contestants)
+        {
+            sb.append(sorted_Contestant.getName());
+            sb.append(": ");
+            sb.append(sorted_Contestant.getDistance());
+            sb.append(" meters (");
+            sb.append(sorted_Contestant.getSpeed());
+            sb.append(" km/h)\n");
+        }
+        return sb.toString();
     }
 }
