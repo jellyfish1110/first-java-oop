@@ -1,18 +1,16 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws marksException, studentsException, sizeException
+    public static void main(String[] args) throws marksException, student_MarksException, sizeException
     {
-        Scanner scan = new Scanner(System.in);
+        StudentInfo go6o = new StudentInfo("Peter", Arrays.asList(6.00, 3.00, 4.00, 3.50, 5.00, 3.00, 4.50));
 
-        double a = scan.nextDouble();
-        double b = a;
-
-        StudentInfo go6o = new StudentInfo("peter", a, b);
-
-        go6o.getAverage();
+//        System.out.printf("%.2f", go6o.getAverage());
+        System.out.println(go6o.toString());
+        //printf format !!!!!!!!!!!!!!!!!!!
     }
 }

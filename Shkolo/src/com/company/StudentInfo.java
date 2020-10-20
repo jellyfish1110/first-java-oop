@@ -1,48 +1,45 @@
 package com.company;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentInfo
 {
     private String studentName;
-    private double marks;
-    private ArrayList<Double> studentMarks = new ArrayList<>();
+    private List<Double> studentMarks = new ArrayList<>();
     private ArrayList<StudentInfo> students = new ArrayList<>();
 
     public StudentInfo()
     {
-        this.marks = 0;
         this.studentMarks = new ArrayList<>();
     }
 
-    public StudentInfo(String studentName, double marks, double mark_Counter) throws studentsException, marksException, sizeException
+    public StudentInfo(String studentName, List<Double> studentMarks) throws student_MarksException, marksException, sizeException
     {
         this.studentName = studentName;
-        this.marks = marks;
         this.studentMarks = studentMarks;
-        while(mark_Counter > 0)
-        {
-            studentMarks.add(marks);
-            mark_Counter--;
-        }
 
         if (studentMarks.size() > 10)
         {
             throw
-                    new studentsException("No more than 10 students allowed!");
+                    new student_MarksException(studentMarks.size());
 
         }
 
-        if (marks > 6 || marks < 2)
+        for (double current_Mark : studentMarks)
         {
-            throw
-                    new marksException("Marks must be between 2 and 6!");
+            if(current_Mark > 6 || current_Mark < 2)
+            {
+                throw
+                        new marksException(current_Mark);
+            }
         }
 
         if (studentName.length() < 5)
         {
             throw
-                    new sizeException("Name must contain at least 5 characters");
+                    new sizeException(studentName);
         }
     }
 
@@ -51,68 +48,74 @@ public class StudentInfo
         return studentName;
     }
 
-    public ArrayList<Double> getMarks()
+    public List<Double> getMarks()
     {
         return studentMarks;
     }
 
-    public void addMark(double new_Mark) throws studentsException, marksException
+    public void addMark(double new_Mark) throws student_MarksException, marksException
     {
-        studentMarks.add(new_Mark);
-        if(studentMarks.size() == 10)
+
+        if(studentMarks.size() > 10 || studentMarks.size() < 0)
         {
             throw
-                    new studentsException("Marks list already full!");
+                    new student_MarksException(studentMarks.size());
         }
 
-        if(new_Mark > 6 || new_Mark < 2)
+        else if(new_Mark > 6 || new_Mark < 2)
         {
             throw
-                    new marksException("Marks must have a value between 2 and 6!");
+                    new marksException(new_Mark);
         }
+
+        else
+        {
+            studentMarks.add(new_Mark);
+        }
+
     }
 
-    public void getAverage()
+    public double getAverage()
     {
 
-
-        double average = marks / studentMarks.size();
-        double bullcrap = studentMarks.size();
-/*
-        while(bullcrap != 1)
+        double sum = 0;
+        for(double mark : getMarks())
         {
-            marks = marks + marks;
-            bullcrap--;
+            sum += mark;
         }
-        */
-        System.out.println(average);
+
+        double average = sum / studentMarks.size();
+
+        return average;
     }
 
     public String toString()
     {
-        double counter = 1;
+        DecimalFormat format = new DecimalFormat("#.00");
+        double averageMark = getAverage();
+        int counter = 1;
+
         StringBuilder string_Builder = new StringBuilder();
 
-        for(StudentInfo student : students)
-        {
-            string_Builder.append("Name: ");
+            string_Builder.append(" Name: " + getName() + "\n");
 
-            while(studentMarks.size() > 0)
+            for(double mark : studentMarks)
             {
-                string_Builder.append("Mark " + counter);
-                string_Builder.append(studentMarks.get(0) + " ");
+                string_Builder.append(" Mark " + counter + ": ");
+                string_Builder.append(format.format(mark) + " " + "\n");
                 counter++;
             }
-        }
+            string_Builder.append("Average" + ":" + " [" + format.format(averageMark) + "]");
+
         return string_Builder.toString();
     }
 
-    public void removeMark(int index) throws sizeException
+    public void removeMark(int index) throws student_MarksException
     {
         if(index > studentMarks.size())
         {
             throw
-                    new sizeException("Mark is null, cannot be removed");
+                    new student_MarksException(index);
         }
         else
         {
@@ -120,13 +123,14 @@ public class StudentInfo
         }
     }
 
-    public void replaceMarkAt(int index, double new_Mark) throws sizeException, marksException
+    public void replaceMarkAt(int index, double new_Mark) throws invalidIndex, marksException
     {
         if(index > studentMarks.size())
         {
             throw
-                    new sizeException("Mark is null, cannot be removed");
+                    new invalidIndex(index);
         }
+
         else
         {
             studentMarks.set(index, new_Mark);
@@ -135,7 +139,7 @@ public class StudentInfo
         if(new_Mark > 6 || new_Mark < 2)
         {
             throw
-                    new marksException("Marks must have a value between 2 and 6!");
+                    new marksException(new_Mark);
         }
     }
 }

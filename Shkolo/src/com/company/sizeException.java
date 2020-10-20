@@ -1,8 +1,9 @@
 package com.company;
 
-public class sizeException extends Throwable
+public class sizeException extends Exception
 {
-    public sizeException(Object o)
+    public sizeException(String name)
     {
+        super("Name must contain at least 5 characters, got '" + name + "'");
     }
 }
